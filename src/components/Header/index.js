@@ -7,6 +7,8 @@ const Header = () => {
     return (
         <Wrapper>
             <Content>
+                <h1>FARMERS LEAGUE / VERIFIABLE RANDOM FOOTBALLERS</h1>
+                <></>
                 <ConnectButton moralisAuth={true} />
             </Content>
         </Wrapper>

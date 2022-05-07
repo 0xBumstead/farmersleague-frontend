@@ -21,6 +21,8 @@ export const GlobalStyle = createGlobalStyle`
     body {
         margin: 0;
         padding: 0;
+        height: 100%;
+        background: var(--darkGrey);
 
         h1 {
             font-size: 2rem;
@@ -35,6 +37,11 @@ export const GlobalStyle = createGlobalStyle`
 
         p {
             font-size: 1rem;
+            color: var(--white);
+        }
+
+        p2 {
+            font-size: 0.75rem;
             color: var(--white);
         }
     }

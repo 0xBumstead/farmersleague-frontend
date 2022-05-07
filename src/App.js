@@ -15,7 +15,7 @@ const App = () => {
       <Header />
       {isWeb3Enabled ? (
         <div>
-          {supportedChain == parseInt(chainId).toString() ? (
+          {supportedChain === parseInt(chainId).toString() ? (
             <Routes>
               <Route path="/" element={<Home />} />
             </Routes>
