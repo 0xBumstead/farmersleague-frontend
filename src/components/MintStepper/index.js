@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { ethers } from "ethers"
-import { useWeb3Contract, useMoralis } from "react-moralis"
+import { useMoralis } from "react-moralis"
 import { Stepper, Button, useNotification } from "web3uikit"
 import { contractAddresses, abi_VerifiableRandomFootballer } from "../../constants"
 import ContractButton from "../ContractButton"
@@ -17,18 +17,6 @@ const MintStepper = ({ price }) => {
 
     const verifiableRandomFootballerAddress = contractAddresses["VerifiableRandomFootballer"]
     const ABI = abi_VerifiableRandomFootballer
-
-    const {
-        runContractFunction: requestPlayer,
-        isLoading: requestIsLoading,
-        isFetching: requestIsFetching,
-    } = useWeb3Contract({
-        abi: ABI,
-        contractAddress: verifiableRandomFootballerAddress,
-        functionName: "requestPlayer",
-        msgValue: price,
-        params: {}
-    })
 
     const handleNewNotification = () => {
         dispatch({
@@ -54,6 +42,16 @@ const MintStepper = ({ price }) => {
         handleNewNotification(tx)
     }
 
+    const reset = () => {
+        setTokenId("0")
+        setIsGenerated(false)
+        const event = new Event("prev")
+        document.dispatchEvent(event)
+        document.dispatchEvent(event)
+        document.dispatchEvent(event)
+        document.dispatchEvent(event)
+    }
+
     return (
         <Wrapper>
             <Stepper
@@ -67,12 +65,12 @@ const MintStepper = ({ price }) => {
                                 <Text>
                                     <h1>Get a new player with the mint function</h1>
                                     <p>This process needs you to validate two transactions in your wallet.</p>
-                                    <p>The first one is requestPlayer and will get an empty NFT with just a unique tokenId.
+                                    <p>The first one is requestPlayer and will get an empty NFT with just a unique token ID.
                                         This will cost {Moralis.Units.FromWei(price)} Matic + gas fees (quite low).</p>
-                                    <p>When this transaction is validated, the Chainlink VRF will return a random number associated to your tokenId.</p>
-                                    <p>You will then to validate the second transaction: generatePlayer that will create the player attributes and art based on the random number.
+                                    <p>When this transaction is validated, the Chainlink VRF will return a random number associated to your token ID.</p>
+                                    <p>You will then need to validate the second transaction: generatePlayer that will create the player attributes and art based on the random number.
                                         For the second transaction you will pay only the gas fees, but they will be quite high (up to 4M gas).</p>
-                                    <p>Last step you discover you discover your new player!</p>
+                                    <p>And finally you'll discover your new player!</p>
                                 </Text>
                                 <Nav>
                                     <Button id="next" text="Start" theme="secondary" type="button" />
@@ -83,15 +81,15 @@ const MintStepper = ({ price }) => {
                         content:
                             <Nav>
                                 <Button id="prev" text="Prev" theme="secondary" type="button" />
-                                <Button
-                                    icon="plus"
-                                    onClick={async () => await requestPlayer({
-                                        onSuccess: requestSuccess,
-                                    })}
+                                <ContractButton
+                                    abi={ABI}
+                                    address={verifiableRandomFootballerAddress}
+                                    functionName="requestPlayer"
+                                    msgValue={price}
+                                    params={{}}
                                     text="Mint a new player"
-                                    theme="primary"
-                                    type="button"
-                                    disabled={requestIsLoading || requestIsFetching || tokenId !== "0"}
+                                    callback={requestSuccess}
+                                    disabled={tokenId !== "0"}
                                 />
                                 <Button id="next" text="Next" theme="secondary" type="button" disabled={tokenId === "0"} />
                             </Nav>
@@ -104,7 +102,8 @@ const MintStepper = ({ price }) => {
                                         <p>Your player is ready ! Go to next step to reveal it</p>
                                     ) : (
                                         <>
-                                            <p>Congratulations ! You are now the owner of Player #{tokenId}</p>
+                                            <h3>Congratulations !</h3>
+                                            <p>You are now the owner of Player #{tokenId}</p>
                                             <p>Please wait at least one minute before generating the metadata while the Chainlink VRF is providing the randomness</p>
                                         </>
                                     )}
@@ -117,6 +116,7 @@ const MintStepper = ({ price }) => {
                                         functionName="generatePlayer"
                                         msgValue="0"
                                         params={{ _tokenId: tokenId }}
+                                        text="Generate the metadata"
                                         callback={generationSuccess}
                                         disabled={isGenerated}
                                     />
@@ -144,7 +144,7 @@ const MintStepper = ({ price }) => {
                                     <p>You can now start over the mint</p>
                                 </Text>
                                 <Nav>
-                                    <Button text="Mint another one ! " theme="primary" type="button" onClick={() => window.location.reload()} />
+                                    <Button text="Mint another one ! " theme="primary" type="button" onClick={() => reset()} />
                                 </Nav>
                             </>
                     }

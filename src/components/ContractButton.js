@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useWeb3Contract } from "react-moralis"
 import { Button } from "web3uikit"
 
-const ContractButton = ({ abi, address, functionName, msgValue, params, callback, disabled }) => {
+const ContractButton = ({ abi, address, functionName, msgValue, params, text, callback, disabled }) => {
 
     const {
         runContractFunction,
@@ -23,7 +23,7 @@ const ContractButton = ({ abi, address, functionName, msgValue, params, callback
             onClick={async () => await runContractFunction({
                 onSuccess: callback,
             })}
-            text="Generate the metadata"
+            text={text}
             theme="primary"
             type="button"
             disabled={isLoading || isFetching || disabled}
@@ -32,11 +32,12 @@ const ContractButton = ({ abi, address, functionName, msgValue, params, callback
 }
 
 ContractButton.propTypes = {
-    abi: PropTypes.object,
+    abi: PropTypes.array,
     address: PropTypes.string,
     functionName: PropTypes.string,
     msgValue: PropTypes.string,
     params: PropTypes.object,
+    text: PropTypes.string,
     callback: PropTypes.func,
     disabled: PropTypes.bool,
 }

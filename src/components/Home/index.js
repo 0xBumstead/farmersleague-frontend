@@ -58,13 +58,21 @@ const Home = () => {
                 >
                     <Tab
                         tabKey={1}
+                        tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="pin" /><span style={{ paddingLeft: '4px' }}>Home{' '}</span></div>}
+                    >
+                        <p>
+                            <Illustration logo="comingSoon" />
+                        </p>
+                    </Tab>
+                    <Tab
+                        tabKey={2}
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="plus" /><span style={{ paddingLeft: '4px' }}>Mint{' '}</span></div>}
                     >
 
                         <MintStepper price={mintPrice} />
                     </Tab>
                     <Tab
-                        tabKey={2}
+                        tabKey={3}
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="grid" />{' '}<span style={{ paddingLeft: '4px' }}>Collection{' '}</span></div>}
                     >
                         <Grid header="Full collection">
@@ -74,7 +82,7 @@ const Home = () => {
                         </Grid>
                     </Tab>
                     <Tab
-                        tabKey={3}
+                        tabKey={4}
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="user" />{' '}<span style={{ paddingLeft: '4px' }}>Dashboard{' '}</span></div>}
                     >
                         <Grid header="My players">
@@ -84,7 +92,23 @@ const Home = () => {
                         </Grid>
                     </Tab>
                     <Tab
-                        tabKey={4}
+                        tabKey={5}
+                        tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="link" />{' '}<span style={{ paddingLeft: '4px' }}>Teams{' '}</span></div>}
+                    >
+                        <p>
+                            <Illustration logo="comingSoon" />
+                        </p>
+                    </Tab>
+                    <Tab
+                        tabKey={6}
+                        tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="list" />{' '}<span style={{ paddingLeft: '4px' }}>Tranfers & Loans{' '}</span></div>}
+                    >
+                        <p>
+                            <Illustration logo="comingSoon" />
+                        </p>
+                    </Tab>
+                    <Tab
+                        tabKey={7}
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="calendar" />{' '}<span style={{ paddingLeft: '4px' }}>Competition{' '}</span></div>}
                     >
                         <p>
