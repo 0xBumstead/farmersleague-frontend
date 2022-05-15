@@ -1,0 +1,38 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_playerRate",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_leagueGame",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor",
+        "name": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_gameId",
+                "type": "uint256"
+            }
+        ],
+        "name": "setResult",
+        "outputs": [
+            {
+                "internalType": "uint8",
+                "name": "result",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]

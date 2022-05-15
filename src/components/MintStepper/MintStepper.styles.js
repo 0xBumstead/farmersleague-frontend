@@ -11,7 +11,6 @@ export const Nav = styled.div`
     margin: 20px;
 
 `
-
 export const Text = styled.div`
     display: inline;
     align-items: center;
