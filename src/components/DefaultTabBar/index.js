@@ -5,7 +5,8 @@ import { TabList, Tab, Icon, Illustration } from "web3uikit"
 import PlayerCard from "../PlayerCard"
 import Grid from "../Grid"
 import MintStepper from "../MintStepper"
-import { StyledLink } from "./DefaultTabBar.styles"
+import main from "../../images/main.jpg"
+import { StyledLink, Wrapper, Text, Image } from "./DefaultTabBar.styles"
 import { contractAddresses, abi_VerifiableRandomFootballer } from "../../constants"
 
 
@@ -58,7 +59,18 @@ const DefaultTabBar = ({ defaultTab }) => {
                 tabKey={1}
                 tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="pin" /><span style={{ paddingLeft: '4px' }}>Home{' '}</span></div>}
             >
-                <Illustration logo="comingSoon" />
+                <Wrapper>
+                    <Text>
+                        <h1>About this game</h1>
+                        <p>The Farmers League is a fantasy football game, 100% on-chain.</p>
+                        <p>It is based on an NFT collection of 10,000 players called the VRF for Verified Random Footballers.</p>
+                        <p>The generation of the NFT is a fully on-chain process thanks to the use of Chainlink VRF (Verifiable Randomness Function). Each player has 100% on-chain SVG art + attributes.</p>
+                        <p>The game mechanic itself is straight forward but has strong social and financial implications. To succeed in this game, players need good coordination, strategical consistency, and a bit of diligence.</p>
+                        <p>Participants organize their players in teams. Then they challenge other teams. They put tokens at stake for the games (the dedicated ERC20 “KICK” token).</p>
+                        <p>The game result depends for half on the players NFT attributes, half on the team building and the players commitment.</p>
+                    </Text>
+                    <Image src={main} />
+                </Wrapper>
             </Tab>
             <Tab
                 tabKey={2}

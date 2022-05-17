@@ -148,9 +148,13 @@ const Team = () => {
                 >
                     <Content>
                         <Grid header="Team members">
-                            {teamMembers.map(id => (
-                                <PlayerCard key={id} tokenId={id} />
-                            ))}
+                            {((tokenId - captainId) === 0 && tokenId > 0) ? (
+                                teamMembers.map(id => (
+                                    <PlayerCard key={id} tokenId={id} teamId={objectId} isPlayerTeam />
+                                ))) : (
+                                teamMembers.map(id => (
+                                    <PlayerCard key={id} tokenId={id} />
+                                )))}
                         </Grid>
                         <ButtonWrapper>
                             {((tokenId - captainId) !== 0 && tokenId > 0) ? (
@@ -170,9 +174,7 @@ const Team = () => {
                         <Grid header="Team applications">
                             {((tokenId - captainId) === 0 && tokenId > 0) ? (
                                 teamApplications.map(id => (
-                                    <>
-                                        <PlayerCard key={id} tokenId={id} teamId={objectId} />
-                                    </>
+                                    <PlayerCard key={id} tokenId={id} teamId={objectId} />
                                 ))) : (
                                 teamApplications.map(id => (
                                     <PlayerCard key={id} tokenId={id} />

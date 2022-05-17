@@ -169,7 +169,7 @@ const PlayerTeam = ({ tokenId }) => {
 }
 
 PlayerTeam.propTypes = {
-    tokenId: PropTypes.string
+    tokenId: PropTypes.string,
 }
 
 export default PlayerTeam

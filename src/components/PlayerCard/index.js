@@ -7,7 +7,7 @@ import ContractButton from "../ContractButton"
 import { Wrapper, Image, StyledLink } from "./PlayerCard.styles"
 import { contractAddresses, abi_VerifiableRandomFootballer, abi_LeagueTeam } from "../../constants"
 
-const PlayerCard = ({ tokenId, clickable, teamId }) => {
+const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam }) => {
 
     const dispatch = useNotification()
     const { isWeb3Enabled } = useMoralis()
@@ -86,19 +86,32 @@ const PlayerCard = ({ tokenId, clickable, teamId }) => {
                     <p>Defense: {defense} / Attack: {attack}</p>
                     <Image src={imageURI} />
                     {(team > 0) ? (
-                        <ContractButton
-                            abi={leagueTeamABI}
-                            address={leagueTeamAddress}
-                            functionName="validateApplication"
-                            params={{ _playerId: tokenId, _teamId: teamId }}
-                            text="Validate this application"
-                            callback={txSuccess}
-                            disabled={false}
-                        />
+                        <>
+                            {isPlayerTeam ? (
+                                <ContractButton
+                                    abi={leagueTeamABI}
+                                    address={leagueTeamAddress}
+                                    functionName="releasePlayer"
+                                    params={{ _playerId: tokenId, _teamId: teamId }}
+                                    text="Release the player"
+                                    callback={txSuccess}
+                                    disabled={false}
+                                />
+                            ) : (
+                                <ContractButton
+                                    abi={leagueTeamABI}
+                                    address={leagueTeamAddress}
+                                    functionName="validateApplication"
+                                    params={{ _playerId: tokenId, _teamId: teamId }}
+                                    text="Validate this application"
+                                    callback={txSuccess}
+                                    disabled={false}
+                                />
+                            )}
+                        </>
                     ) : (
                         <></>
                     )}
-
                 </>
             )}
         </Wrapper>
@@ -106,9 +119,10 @@ const PlayerCard = ({ tokenId, clickable, teamId }) => {
 }
 
 PlayerCard.propTypes = {
-    tokenId: PropTypes.number,
+    tokenId: PropTypes.string,
     clickable: PropTypes.bool,
     teamId: PropTypes.number,
+    isPlayerTeam: PropTypes.bool,
 }
 
 export default PlayerCard
