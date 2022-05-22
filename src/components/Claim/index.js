@@ -85,7 +85,7 @@ const Claim = ({ tokenId }) => {
 }
 
 Claim.propTypes = {
-    tokenId: PropTypes.string,
+    tokenId: PropTypes.number,
 }
 
 export default Claim

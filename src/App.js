@@ -6,6 +6,7 @@ import Home from "./components/Home"
 import Player from "./components/Player"
 import Teams from "./components/Teams"
 import Team from "./components/Team"
+import SignUpTeam from "./components/SignUpTeam"
 import ErrorMessage from "./components/ErrorMessage"
 import { GlobalStyle } from "./GlobalStyle"
 
@@ -25,6 +26,7 @@ const App = () => {
               <Route path="/player/:objectId" element={<Player />} />
               <Route path="/teams/:objectId" element={<Teams />} />
               <Route path="/team/:objectId/:paramId" element={<Team />} />
+              <Route path="/signup/:objectId" element={<SignUpTeam />} />
             </Routes>
           ) : (
             <>

@@ -4,30 +4,24 @@ import PropTypes from "prop-types"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification, Button } from "web3uikit"
 import ContractButton from "../ContractButton"
-import { contractAddresses, abi_LeagueTeam, abi_KickToken } from "../../constants"
+import { contractAddresses, abi_LeagueGame, abi_LeagueTeam, abi_KickToken } from "../../constants"
 import { Wrapper, Content } from "./IsCaptain.styles"
 
-const IsCaptain = ({ tokenId, teamId }) => {
+const IsCaptain = ({ tokenId, teamId, releasePrice, kickBalance, kickAllowance }) => {
 
     const dispatch = useNotification()
     const navigate = useNavigate()
-    const { Moralis, user, isWeb3Enabled } = useMoralis()
+    const { Moralis, isWeb3Enabled } = useMoralis()
 
-    const [releasePrice, setReleasePrice] = useState(0)
-    const [kickAllowance, setKickAllowance] = useState(0)
     const [captainId, setCaptainId] = useState("0")
+    const [inGameStatus, setInGameStatus] = useState("0")
 
+    const leagueGameAddress = contractAddresses["LeagueGame"]
     const leagueTeamAddress = contractAddresses["LeagueTeam"]
     const kickTokenAddress = contractAddresses["KickToken"]
+    const leagueGameABI = abi_LeagueGame
     const leagueTeamABI = abi_LeagueTeam
     const kickTokenABI = abi_KickToken
-    const walletAddress = user.get("ethAddress")
-
-    const { runContractFunction: getReleasePrice } = useWeb3Contract({
-        abi: leagueTeamABI,
-        contractAddress: leagueTeamAddress,
-        functionName: "releasePrice",
-    })
 
     const { runContractFunction: getCaptainId } = useWeb3Contract({
         abi: leagueTeamABI,
@@ -36,11 +30,11 @@ const IsCaptain = ({ tokenId, teamId }) => {
         params: { _teamId: teamId, _position: 1 },
     })
 
-    const { runContractFunction: getKickAllowance } = useWeb3Contract({
-        abi: kickTokenABI,
-        contractAddress: kickTokenAddress,
-        functionName: "allowance",
-        params: { owner: walletAddress, spender: leagueTeamAddress },
+    const { runContractFunction: teamStatus } = useWeb3Contract({
+        abi: leagueGameABI,
+        contractAddress: leagueGameAddress,
+        functionName: "teamGame",
+        params: { _teamId: teamId, _rank: 0 }
     })
 
     const { runContractFunction: payReleaseClause } = useWeb3Contract({
@@ -51,12 +45,10 @@ const IsCaptain = ({ tokenId, teamId }) => {
     })
 
     const updateUIValues = async () => {
-        const releasePriceFromCall = Moralis.Units.FromWei(await getReleasePrice())
-        const kickAllowanceFromCall = Moralis.Units.FromWei(await getKickAllowance())
         const captainIdFromCAll = (await getCaptainId()).toString()
-        setReleasePrice(releasePriceFromCall)
-        setKickAllowance(kickAllowanceFromCall)
+        const inGameStatusFromCall = (await teamStatus()).toString()
         setCaptainId(captainIdFromCAll)
+        setInGameStatus(inGameStatusFromCall)
     }
 
     const handleNewNotification = () => {
@@ -83,8 +75,12 @@ const IsCaptain = ({ tokenId, teamId }) => {
         updateUIValues()
     }
 
-    const handleSubmit = async () => {
+    const handleSubmitReview = async () => {
         navigate(`/team/${teamId}/${tokenId}`)
+    }
+
+    const handleSubmitSignUp = async () => {
+        navigate(`/signup/${teamId}`)
     }
 
     useEffect(() => {
@@ -97,7 +93,7 @@ const IsCaptain = ({ tokenId, teamId }) => {
         <Wrapper>
             <p>Player is the team's captain</p>
             <Content>
-                {(tokenId === captainId) ? (
+                {(tokenId.toString() === captainId) ? (
                     <>
                         <ContractButton
                             abi={leagueTeamABI}
@@ -111,34 +107,52 @@ const IsCaptain = ({ tokenId, teamId }) => {
                         <p></p>
                         <Button
                             icon="externalLink"
-                            onClick={handleSubmit}
+                            onClick={handleSubmitReview}
                             text="Review pending applications"
                             theme="primary"
                             type="button"
                         />
+                        <p></p>
+                        {(inGameStatus === "0") ? (
+                            <Button
+                                icon="externalLink"
+                                onClick={handleSubmitSignUp}
+                                text="Get ready for the game"
+                                theme="primary"
+                                type="button"
+                            />
+                        ) : (
+                            <p>The team is waiting for an opponent</p>
+                        )}
                     </>
                 ) : (
-                    (kickAllowance < releasePrice) ? (
-                        <ContractButton
-                            abi={kickTokenABI}
-                            address={kickTokenAddress}
-                            functionName="approve"
-                            params={{ spender: leagueTeamAddress, amount: Moralis.Units.ETH(100000000) }}
-                            text="Create a team"
-                            callback={approveSuccess}
-                            disabled={false}
-                        />
-                    ) : (
-                        <ContractButton
-                            abi={leagueTeamABI}
-                            address={leagueTeamAddress}
-                            functionName="payReleaseClause"
-                            params={{ _playerId: tokenId }}
-                            text="Pay the release clause"
-                            callback={txSuccess}
-                            disabled={false}
-                        />
-                    )
+                    <>
+                        {
+                            (kickAllowance < releasePrice) ? (
+                                <ContractButton
+                                    abi={kickTokenABI}
+                                    address={kickTokenAddress}
+                                    functionName="approve"
+                                    params={{ spender: leagueTeamAddress, amount: Moralis.Units.ETH(100000000) }}
+                                    text="Pay the release clause"
+                                    callback={approveSuccess}
+                                    disabled={false}
+                                />
+                            ) : (
+                                <ContractButton
+                                    abi={leagueTeamABI}
+                                    address={leagueTeamAddress}
+                                    functionName="payReleaseClause"
+                                    params={{ _playerId: tokenId }}
+                                    text="Pay the release clause"
+                                    callback={txSuccess}
+                                    disabled={false}
+                                />
+                            )
+                        }
+                        <p>The release clause costs: {releasePrice} KICK</p>
+                        <p>You have : {kickBalance}</p>
+                    </>
                 )}
             </Content>
         </Wrapper>
@@ -146,8 +160,11 @@ const IsCaptain = ({ tokenId, teamId }) => {
 }
 
 IsCaptain.propTypes = {
-    tokenId: PropTypes.string,
-    teamId: PropTypes.number
+    tokenId: PropTypes.number,
+    teamId: PropTypes.number,
+    releasePrice: PropTypes.number,
+    kickBalance: PropTypes.number,
+    kickAllowance: PropTypes.number
 }
 
 export default IsCaptain

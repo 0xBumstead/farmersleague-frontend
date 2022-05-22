@@ -62,9 +62,9 @@ const Player = () => {
                     tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="lifeRing" />{' '}<span style={{ paddingLeft: '4px' }}>Player{' '}</span></div>}
                 >
                     <Content>
-                        <PlayerCard tokenId={objectId} clickable={false} />
-                        <PlayerTeam tokenId={objectId} />
-                        <Claim tokenId={objectId} />
+                        <PlayerCard tokenId={parseInt(objectId)} clickable={false} />
+                        <PlayerTeam tokenId={parseInt(objectId)} />
+                        <Claim tokenId={parseInt(objectId)} />
                     </Content>
                 </Tab>
             </TabList>

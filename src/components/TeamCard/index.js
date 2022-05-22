@@ -15,7 +15,7 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
 
     const [nbOfPlayers, setNbOfPlayers] = useState(0)
     const [captainId, setCaptainId] = useState(0)
-    const [inGameStatus, setInGameStatus] = useState(0)
+    const [inGameStatus, setInGameStatus] = useState("0")
 
     const leagueTeamAddress = contractAddresses["LeagueTeam"]
     const leagueGameAddress = contractAddresses["LeagueGame"]
@@ -46,7 +46,7 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
     const updateUIValues = async () => {
         const nbOfPlayersFromCall = await teamNbOfPlayers()
         const captainIdFromCall = await teamCaptain()
-        const inGameStatusFromCall = await teamStatus()
+        const inGameStatusFromCall = (await teamStatus()).toString()
         setNbOfPlayers(nbOfPlayersFromCall)
         setCaptainId(captainIdFromCall)
         setInGameStatus(inGameStatusFromCall)
@@ -74,7 +74,6 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
         }
     }, [isWeb3Enabled])
 
-    console.log(inGameStatus)
     return (
         <Wrapper>
             {clickable ? (
@@ -82,14 +81,14 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
                     <h3>Team #{teamId}</h3>
                     <p>Number of players: {nbOfPlayers} </p>
                     <p>Captain: {captainId} </p>
-                    <p>Status: {(inGameStatus === 0 || inGameStatus === undefined) ? ("Not ready yet") : (inGameStatus)} </p>
+                    <p>Status: {(inGameStatus === "0" || inGameStatus === undefined) ? ("Not ready yet") : ("Waiting for an opponent")} </p>
                 </StyledLink>
             ) : (
                 <>
                     <h3>Team #{teamId}</h3>
                     <p>Number of players: {nbOfPlayers} </p>
                     <p>Captain: {captainId} </p>
-                    <p>Status: {inGameStatus} </p>
+                    <p>Status: {(inGameStatus === "0" || inGameStatus === undefined) ? ("Not ready yet") : (inGameStatus)} </p>
                 </>
             )}
             {tokenId > 0 ? (
@@ -111,7 +110,7 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
 
 TeamCard.propTypes = {
     teamId: PropTypes.number,
-    tokenId: PropTypes.string,
+    tokenId: PropTypes.number,
     clickable: PropTypes.bool,
 }
 

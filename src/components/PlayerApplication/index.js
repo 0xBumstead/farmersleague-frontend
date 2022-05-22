@@ -87,7 +87,7 @@ const PlayerApplication = ({ tokenId, pendingApplication, setPendingApplication 
 }
 
 PlayerApplication.propTypes = {
-    tokenId: PropTypes.string,
+    tokenId: PropTypes.number,
     pendingApplication: PropTypes.number
 }
 

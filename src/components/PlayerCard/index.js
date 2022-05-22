@@ -7,7 +7,7 @@ import ContractButton from "../ContractButton"
 import { Wrapper, Image, StyledLink } from "./PlayerCard.styles"
 import { contractAddresses, abi_VerifiableRandomFootballer, abi_LeagueTeam } from "../../constants"
 
-const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam }) => {
+const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam, captainId }) => {
 
     const dispatch = useNotification()
     const { isWeb3Enabled } = useMoralis()
@@ -85,7 +85,7 @@ const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam }) => {
                     <p>Compatible positions: {compatiblePositions} </p>
                     <p>Defense: {defense} / Attack: {attack}</p>
                     <Image src={imageURI} />
-                    {(team > 0) ? (
+                    {(team > 0 && (tokenId - captainId) !== 0) ? (
                         <>
                             {isPlayerTeam ? (
                                 <ContractButton
@@ -119,10 +119,11 @@ const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam }) => {
 }
 
 PlayerCard.propTypes = {
-    tokenId: PropTypes.string,
+    tokenId: PropTypes.number,
     clickable: PropTypes.bool,
     teamId: PropTypes.number,
     isPlayerTeam: PropTypes.bool,
+    captainId: PropTypes.number,
 }
 
 export default PlayerCard

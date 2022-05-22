@@ -85,7 +85,7 @@ const DefaultTabBar = ({ defaultTab }) => {
             >
                 <Grid header="Full collection">
                     {allNFTs.result.map(id => (
-                        <PlayerCard tokenId={id.token_id} />
+                        <PlayerCard key={id.token_id} tokenId={parseInt(id.token_id)} />
                     ))}
                 </Grid>
             </Tab>
@@ -95,7 +95,7 @@ const DefaultTabBar = ({ defaultTab }) => {
             >
                 <Grid header="My players">
                     {myNFTs.result.map(id => (
-                        <PlayerCard key={id.token_id} tokenId={id.token_id} clickable />
+                        <PlayerCard key={id.token_id} tokenId={parseInt(id.token_id)} clickable />
                     ))}
                 </Grid>
             </Tab>
@@ -122,7 +122,7 @@ const DefaultTabBar = ({ defaultTab }) => {
 }
 
 DefaultTabBar.propTypes = {
-    defaultTab: PropTypes.number
+    defaultTab: PropTypes.string
 }
 
 export default DefaultTabBar

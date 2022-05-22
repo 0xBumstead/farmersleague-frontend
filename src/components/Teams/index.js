@@ -64,7 +64,7 @@ const Teams = () => {
                 <StyledLink to="/4">
                     <Tab
                         tabKey={4}
-                        tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="user" />{' '}<span style={{ paddingLeft: '4px' }}>Dashboard{' '}</span></div>}
+                        tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="user" />{' '}<span style={{ paddingLeft: '4px' }}>My players{' '}</span></div>}
                     />
                 </StyledLink>
                 <Tab
@@ -73,7 +73,7 @@ const Teams = () => {
                 >
                     <Grid header="Teams">
                         {teamsList.map(id => (
-                            <TeamCard teamId={id} tokenId={objectId} clickable />
+                            <TeamCard key={id} teamId={id} tokenId={objectId} clickable />
                         ))}
                     </Grid>
                 </Tab>

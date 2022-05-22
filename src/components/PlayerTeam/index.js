@@ -158,9 +158,7 @@ const PlayerTeam = ({ tokenId }) => {
             ) : (
                 <>
                     <p># {teamId}</p>
-                    <IsCaptain tokenId={tokenId} teamId={teamId} />
-                    <p>The release clause costs: {releasePrice} KICK</p>
-                    <p>You have : {kickBalance}</p>
+                    <IsCaptain tokenId={tokenId} teamId={teamId} releasePrice={releasePrice} kickBalance={kickBalance} kickAllowance={kickAllowance} />
                 </>
             )
             }
@@ -169,7 +167,7 @@ const PlayerTeam = ({ tokenId }) => {
 }
 
 PlayerTeam.propTypes = {
-    tokenId: PropTypes.string,
+    tokenId: PropTypes.number,
 }
 
 export default PlayerTeam
