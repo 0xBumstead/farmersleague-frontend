@@ -1,269 +1,288 @@
 [
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_teamId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_opponentTeamId",
-          "type": "uint256"
-        }
-      ],
-      "name": "challengeTeam",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "success",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "challengeTime",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "time",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_teamId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_opponentTeamId",
-          "type": "uint256"
-        }
-      ],
-      "name": "declineChallenge",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "success",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_gameId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint8",
-          "name": "_result",
-          "type": "uint8"
-        }
-      ],
-      "name": "finishGame",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "success",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_rank",
-          "type": "uint256"
-        }
-      ],
-      "name": "gameDelay",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "delay",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_gameId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_rank",
-          "type": "uint256"
-        }
-      ],
-      "name": "games",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "gameData",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_rank",
-          "type": "uint256"
-        }
-      ],
-      "name": "prices",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "price",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_teamId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_opponentTeamId",
-          "type": "uint256"
-        }
-      ],
-      "name": "requestGame",
-      "outputs": [
-        {
-          "internalType": "bytes32",
-          "name": "requestId",
-          "type": "bytes32"
-        }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "bytes32",
-          "name": "_requestId",
-          "type": "bytes32"
-        }
-      ],
-      "name": "requestIdToGameId",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "requestIdToGameId",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_teamId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_layout",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_stake",
-          "type": "uint256"
-        }
-      ],
-      "name": "signUpTeam",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "success",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "payable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_firstTeamId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_secondTeamId",
-          "type": "uint256"
-        }
-      ],
-      "name": "teamChallenge",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "teamChallenge",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_teamId",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_rank",
-          "type": "uint256"
-        }
-      ],
-      "name": "teamGame",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "teamGameData",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    }
-  ]
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_teamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "cancelSignUp",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_teamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_opponentTeamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "challengeTeam",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "challengeTime",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "time",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_teamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_opponentTeamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "declineChallenge",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gameId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_result",
+        "type": "uint8"
+      }
+    ],
+    "name": "finishGame",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_rank",
+        "type": "uint256"
+      }
+    ],
+    "name": "gameDelay",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "delay",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_gameId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rank",
+        "type": "uint256"
+      }
+    ],
+    "name": "games",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "gameData",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_rank",
+        "type": "uint256"
+      }
+    ],
+    "name": "prices",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_teamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_opponentTeamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "requestGame",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "requestId",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_requestId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "requestIdToGameId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "requestIdToGameId",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_teamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_layout",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_stake",
+        "type": "uint256"
+      }
+    ],
+    "name": "signUpTeam",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_challengedTeamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_challengingTeamId",
+        "type": "uint256"
+      }
+    ],
+    "name": "teamChallenge",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "challengeDeadLine",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_teamId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rank",
+        "type": "uint256"
+      }
+    ],
+    "name": "teamGame",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "teamGameData",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

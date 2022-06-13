@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { useMoralis, useWeb3Contract } from "react-moralis"
+import { useMoralis, useMoralisWeb3Api, useWeb3Contract } from "react-moralis"
 import PropTypes from "prop-types"
 import { Wrapper, Content, Image } from "./TeamSignedUp.styles"
-import { contractAddresses, abi_LeagueGame } from "../../constants"
+import { contractAddresses, eventTopics, abi_LeagueGame, abi_event_teamChallenged } from "../../constants"
 import img_00 from "../../images/00_5-4-1.png"
 import img_01 from "../../images/01_5-4-1.png"
 import img_02 from "../../images/02_5-4-1.png"
@@ -21,13 +21,18 @@ import img_13 from "../../images/13_3-4-3.png"
 const TeamSignedUp = ({ teamId }) => {
 
     const { Moralis, isWeb3Enabled } = useMoralis()
+    const Web3Api = useMoralisWeb3Api({})
 
     const leagueGameAddress = contractAddresses["LeagueGame"]
+    const challengeTopic = eventTopics["teamChallenged"]
     const ABI = abi_LeagueGame
+    const teamChallengedABI = abi_event_teamChallenged
 
     const [inGameStatus, setInGameStatus] = useState("0")
     const [layout, setLayout] = useState("0")
     const [stake, setStake] = useState(0)
+    const [challengingTeam, setChallengingTeam] = useState(0)
+    const [challengedTeam, setChallengedTeam] = useState(0)
 
     const { runContractFunction: getTeamStatus } = useWeb3Contract({
         abi: ABI,
@@ -50,10 +55,34 @@ const TeamSignedUp = ({ teamId }) => {
         params: { _teamId: teamId, _rank: 3 }
     })
 
+
     const updateUIValues = async () => {
         const inGameStatusFromCall = (await getTeamStatus()).toString()
         const layoutFromCall = (await getLayout()).toString()
         const stakeFromCall = Moralis.Units.FromWei(await getStake())
+        const events = await Web3Api.native.getContractEvents({
+            chain: "mumbai",
+            abi: teamChallengedABI,
+            address: leagueGameAddress,
+            topic: challengeTopic
+        })
+        const challenges = events.result
+        if (inGameStatusFromCall === "2") {
+            for (let index = 0; index < challenges.length; index++) {
+                if (challenges[index].data["challengingTeamId"] === teamId.toString()) {
+                    setChallengedTeam(challenges[index].data["challengedTeamId"])
+                    break
+                }
+            }
+        }
+        if (inGameStatusFromCall === "3") {
+            for (let index = 0; index < challenges.length; index++) {
+                if (challenges[index].data["challengedTeamId"] === teamId.toString()) {
+                    setChallengingTeam(challenges[index].data["challengingTeamId"])
+                    break
+                }
+            }
+        }
         setInGameStatus(inGameStatusFromCall)
         setLayout(layoutFromCall)
         setStake(stakeFromCall)
@@ -73,7 +102,17 @@ const TeamSignedUp = ({ teamId }) => {
                     <p>The team is not ready yet</p>
                 ) : (
                     <>
-                        <p>The team is waiting for an opponent, with {stake} KICK tokens at stake</p>
+                        <p>
+                            Status: {(inGameStatus === "1") ? (
+                                `The team is waiting for an opponent, with ${stake} KICK tokens at stake`
+                            ) : ((inGameStatus === "2") ? (
+                                `The team is challenging team #${challengedTeam}`
+                            ) : ((inGameStatus === "3") ? (
+                                `The team is challenged by team #${challengingTeam}`
+                            ) : (
+                                "The team has a game set"
+                            )))}
+                        </p>
                         {(layout === "0") ? (
                             <Image src={img_00} />
                         ) : (

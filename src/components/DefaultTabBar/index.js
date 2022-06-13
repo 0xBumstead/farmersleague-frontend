@@ -99,7 +99,7 @@ const DefaultTabBar = ({ defaultTab }) => {
                     ))}
                 </Grid>
             </Tab>
-            <StyledLink to="/teams/0">
+            <StyledLink to="/teams/0/0">
                 <Tab
                     tabKey={5}
                     tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="link" />{' '}<span style={{ paddingLeft: '4px' }}>Teams{' '}</span></div>}

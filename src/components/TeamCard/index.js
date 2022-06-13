@@ -7,7 +7,7 @@ import ContractButton from "../ContractButton"
 import { Wrapper, StyledLink } from "./TeamCard.styles"
 import { abi_LeagueTeam, abi_LeagueGame, contractAddresses } from "../../constants"
 
-const TeamCard = ({ teamId, tokenId, clickable }) => {
+const TeamCard = ({ teamId, tokenId, teamChallenging, clickable }) => {
 
     const dispatch = useNotification()
     const { isWeb3Enabled } = useMoralis()
@@ -65,7 +65,7 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
     const txSuccess = async (tx) => {
         await tx.wait(1)
         handleNewNotification(tx)
-        navigate("/teams/0")
+        navigate("/teams/0/0")
     }
 
     useEffect(() => {
@@ -81,14 +81,39 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
                     <h3>Team #{teamId}</h3>
                     <p>Number of players: {nbOfPlayers} </p>
                     <p>Captain: {captainId} </p>
-                    <p>Status: {(inGameStatus === "0" || inGameStatus === undefined) ? ("Not ready yet") : ("Waiting for an opponent")} </p>
+                    <p>
+                        Status: {(inGameStatus === "0" || inGameStatus === undefined) ? (
+                            "Not ready yet"
+                        ) : ((inGameStatus === "1") ? (
+                            "Waiting for an opponent"
+                        ) : ((inGameStatus === "2") ? (
+                            "The team is challenging an opponent"
+                        ) : (
+                            (inGameStatus === "3") ? (
+                                "The team is challenged by an opponent"
+                            ) : (
+                                "The team has a game set"
+                            ))))}
+                    </p>
                 </StyledLink>
             ) : (
                 <>
                     <h3>Team #{teamId}</h3>
                     <p>Number of players: {nbOfPlayers} </p>
                     <p>Captain: {captainId} </p>
-                    <p>Status: {(inGameStatus === "0" || inGameStatus === undefined) ? ("Not ready yet") : (inGameStatus)} </p>
+                    <p>
+                        Status: {(inGameStatus === "0" || inGameStatus === undefined) ? (
+                            "Not ready yet"
+                        ) : ((inGameStatus === "1") ? (
+                            "Waiting for an opponent"
+                        ) : ((inGameStatus === "2") ? (
+                            "The team is challenging an opponent"
+                        ) : ((inGameStatus === "3") ? (
+                            "The team is challenged by an opponent"
+                        ) : (
+                            "The team has a game set"
+                        ))))}
+                    </p>
                 </>
             )}
             {tokenId > 0 ? (
@@ -104,6 +129,19 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
             ) : (
                 <></>
             )}
+            {(teamChallenging > 0 && teamChallenging.toString() !== teamId.toString() && inGameStatus === "1") ? (
+                <ContractButton
+                    abi={leagueGameABI}
+                    address={leagueGameAddress}
+                    functionName="challengeTeam"
+                    params={{ _teamId: teamChallenging, _opponentTeamId: teamId }}
+                    text="Challenge this team"
+                    callback={txSuccess}
+                    disabled={false}
+                />
+            ) : (
+                <></>
+            )}
         </Wrapper>
     )
 }
@@ -111,6 +149,7 @@ const TeamCard = ({ teamId, tokenId, clickable }) => {
 TeamCard.propTypes = {
     teamId: PropTypes.number,
     tokenId: PropTypes.number,
+    teamChallenging: PropTypes.number,
     clickable: PropTypes.bool,
 }
 

@@ -95,7 +95,7 @@ const SignUpTeam = () => {
     const txSuccess = async (tx) => {
         await tx.wait(1)
         handleNewNotification(tx)
-        navigate("/teams/0")
+        navigate("/teams/0/0")
     }
 
     const handleClick = async (layoutFromClick) => {
@@ -142,7 +142,7 @@ const SignUpTeam = () => {
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="user" />{' '}<span style={{ paddingLeft: '4px' }}>My players{' '}</span></div>}
                     />
                 </StyledLink>
-                <StyledLink key="sl5" to="/teams/0">
+                <StyledLink key="sl5" to="/teams/0/0">
                     <Tab
                         tabKey={5}
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="link" />{' '}<span style={{ paddingLeft: '4px' }}>Teams{' '}</span></div>}

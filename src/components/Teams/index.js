@@ -8,7 +8,7 @@ import { Wrapper, StyledLink } from "./Teams.styles"
 import { contractAddresses, abi_LeagueTeam } from "../../constants"
 
 const Teams = () => {
-    const { objectId } = useParams()
+    const { objectId, paramId } = useParams()
     const { isWeb3Enabled } = useMoralis()
     const [teamsList, setTeamsList] = useState([])
 
@@ -73,7 +73,7 @@ const Teams = () => {
                 >
                     <Grid header="Teams">
                         {teamsList.map(id => (
-                            <TeamCard key={id} teamId={id} tokenId={objectId} clickable />
+                            <TeamCard key={id} teamId={id} tokenId={parseInt(objectId)} teamChallenging={parseInt(paramId)} clickable />
                         ))}
                     </Grid>
                 </Tab>

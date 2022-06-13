@@ -18,11 +18,9 @@ export const Wrapper = styled.div`
 
     p {
         margin: 5px 0;
+        text-align: center;
     }
 
-    p2 {
-        margin: 5px 0;
-    }
 `
 
 export const StyledLink = styled(Link)`

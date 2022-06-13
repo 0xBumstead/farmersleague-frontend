@@ -1,0 +1,19 @@
+{
+  "anonymous": false,
+  "inputs": [
+    {
+      "indexed": false,
+      "internalType": "uint256",
+      "name": "challengedTeamId",
+      "type": "uint256"
+    },
+    {
+      "indexed": false,
+      "internalType": "uint256",
+      "name": "challengingTeamId",
+      "type": "uint256"
+    }
+  ],
+  "name": "teamChallenged",
+  "type": "event"
+}

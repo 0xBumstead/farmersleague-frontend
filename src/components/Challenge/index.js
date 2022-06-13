@@ -1,13 +1,44 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { useMoralis, useMoralisWeb3Api } from "react-moralis"
 import { useParams } from "react-router-dom"
 import { TabList, Tab, Icon } from "web3uikit"
-import PlayerCard from "../PlayerCard"
-import PlayerTeam from "../PlayerTeam"
-import Claim from "../Claim"
-import { Wrapper, Content, StyledLink } from "./Player.styles"
+import DeclineChallenge from "../DeclineChallenge"
+import { Wrapper, StyledLink } from "./Challenge.styles"
+import { contractAddresses, eventTopics, abi_event_teamChallenged } from "../../constants"
 
-const Player = () => {
-    const { objectId } = useParams()
+const Challenge = () => {
+
+    const { objectId, paramId } = useParams()
+    const { isWeb3Enabled } = useMoralis()
+    const Web3Api = useMoralisWeb3Api({})
+
+    const [challengingTeam, setChallengingTeam] = useState(0)
+
+    const leagueGameAddress = contractAddresses["LeagueGame"]
+    const teamChallengedABI = abi_event_teamChallenged
+    const challengeTopic = eventTopics["teamChallenged"]
+
+    const updateUIValues = async () => {
+        const events = await Web3Api.native.getContractEvents({
+            chain: "mumbai",
+            abi: teamChallengedABI,
+            address: leagueGameAddress,
+            topic: challengeTopic
+        })
+        const challenges = events.result
+        for (let index = 0; index < challenges.length; index++) {
+            if (challenges[index].data["challengedTeamId"] === objectId) {
+                setChallengingTeam(challenges[index].data["challengingTeamId"])
+                break
+            }
+        }
+    }
+
+    useEffect(() => {
+        if (isWeb3Enabled) {
+            updateUIValues()
+        }
+    }, [isWeb3Enabled])
 
     return (
         <Wrapper>
@@ -39,7 +70,7 @@ const Player = () => {
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="user" />{' '}<span style={{ paddingLeft: '4px' }}>My players{' '}</span></div>}
                     />
                 </StyledLink>
-                <StyledLink to="/teams/0/0">
+                <StyledLink to="/teams/0">
                     <Tab
                         tabKey={5}
                         tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="link" />{' '}<span style={{ paddingLeft: '4px' }}>Teams{' '}</span></div>}
@@ -59,17 +90,12 @@ const Player = () => {
                 </StyledLink>
                 <Tab
                     tabKey={8}
-                    tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="lifeRing" />{' '}<span style={{ paddingLeft: '4px' }}>Player{' '}</span></div>}
+                    tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="lifeRing" />{' '}<span style={{ paddingLeft: '4px' }}>Challenge{' '}</span></div>}
                 >
-                    <Content>
-                        <PlayerCard tokenId={parseInt(objectId)} clickable={false} />
-                        <PlayerTeam tokenId={parseInt(objectId)} />
-                        <Claim tokenId={parseInt(objectId)} />
-                    </Content>
-                </Tab>
+                    <DeclineChallenge challengedTeam={parseInt(objectId)} challengingTeam={parseInt(challengingTeam)} captainId={parseInt(paramId)} />                </Tab>
             </TabList>
         </Wrapper>
     )
 }
 
-export default Player
+export default Challenge

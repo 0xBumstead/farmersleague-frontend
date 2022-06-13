@@ -4,8 +4,8 @@ import PropTypes from "prop-types"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import { useNotification, Button } from "web3uikit"
 import ContractButton from "../ContractButton"
-import { contractAddresses, abi_LeagueGame, abi_LeagueTeam, abi_KickToken } from "../../constants"
 import { Wrapper, Content } from "./IsCaptain.styles"
+import { contractAddresses, abi_LeagueGame, abi_LeagueTeam, abi_KickToken } from "../../constants"
 
 const IsCaptain = ({ tokenId, teamId, releasePrice, kickBalance, kickAllowance }) => {
 
@@ -83,6 +83,14 @@ const IsCaptain = ({ tokenId, teamId, releasePrice, kickBalance, kickAllowance }
         navigate(`/signup/${teamId}`)
     }
 
+    const handleSubmitChallenge = async () => {
+        navigate(`/teams/0/${teamId}`)
+    }
+
+    const handleSubmitDecline = async () => {
+        navigate(`/challenge/${teamId}/${tokenId}`)
+    }
+
     useEffect(() => {
         if (isWeb3Enabled) {
             updateUIValues()
@@ -121,9 +129,43 @@ const IsCaptain = ({ tokenId, teamId, releasePrice, kickBalance, kickAllowance }
                                 theme="primary"
                                 type="button"
                             />
+                        ) : ((inGameStatus == "1") ? (
+                            <>
+                                <p>The team is waiting for an opponent</p>
+                                <ContractButton
+                                    abi={leagueGameABI}
+                                    address={leagueGameAddress}
+                                    functionName="cancelSignUp"
+                                    params={{ _teamId: teamId }}
+                                    text="Cancel sign up"
+                                    callback={txSuccess}
+                                    disabled={false}
+                                />
+                                <p></p>
+                                <Button
+                                    icon="externalLink"
+                                    onClick={handleSubmitChallenge}
+                                    text="Challenge another team"
+                                    theme="primary"
+                                    type="button"
+                                />
+                            </>
+                        ) : ((inGameStatus == "2") ? (
+                            <p>The team is challenging an opponent</p>
+                        ) : ((inGameStatus == "3") ? (
+                            <>
+                                <p>The team is challenged by an opponent</p>
+                                <Button
+                                    icon="externalLink"
+                                    onClick={handleSubmitDecline}
+                                    text="Review the challenge"
+                                    theme="primary"
+                                    type="button"
+                                />
+                            </>
                         ) : (
-                            <p>The team is waiting for an opponent</p>
-                        )}
+                            <p>The team has a game set</p>
+                        ))))}
                     </>
                 ) : (
                     <>

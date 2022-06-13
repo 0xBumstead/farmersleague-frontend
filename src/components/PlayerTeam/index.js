@@ -158,7 +158,13 @@ const PlayerTeam = ({ tokenId }) => {
             ) : (
                 <>
                     <p># {teamId}</p>
-                    <IsCaptain tokenId={tokenId} teamId={teamId} releasePrice={releasePrice} kickBalance={kickBalance} kickAllowance={kickAllowance} />
+                    <IsCaptain
+                        tokenId={tokenId}
+                        teamId={teamId}
+                        releasePrice={parseInt(releasePrice)}
+                        kickBalance={parseInt(kickBalance)}
+                        kickAllowance={parseInt(kickAllowance)}
+                    />
                 </>
             )
             }
