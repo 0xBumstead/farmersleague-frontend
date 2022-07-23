@@ -1,246 +1,109 @@
 [
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_kickAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_VRFAddress",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "constructor",
-        "name": "constructor"
-    },
-    {
-        "inputs": [],
-        "name": "AlreadyListed",
-        "type": "error"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "balance",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "requested",
-                "type": "uint256"
-            }
-        ],
-        "name": "BalanceTooLow",
-        "type": "error"
-    },
-    {
-        "inputs": [],
-        "name": "NotApproved",
-        "type": "error"
-    },
-    {
-        "inputs": [],
-        "name": "NotListed",
-        "type": "error"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
-        ],
-        "name": "NotOwner",
-        "type": "error"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "previousOwner",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
-            }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint16",
-                "name": "tokenId",
-                "type": "uint16"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "price",
-                "type": "uint256"
-            }
-        ],
-        "name": "listingPlayerForTransfer",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint16",
-                "name": "tokenId",
-                "type": "uint16"
-            }
-        ],
-        "name": "unlistingPlayer",
-        "type": "event"
-    },
-    {
-        "inputs": [],
-        "name": "kickToken",
-        "outputs": [
-            {
-                "internalType": "contract IERC20",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_price",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint16",
-                "name": "_playerId",
-                "type": "uint16"
-            }
-        ],
-        "name": "listPlayerForTransfer",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint16",
-                "name": "",
-                "type": "uint16"
-            }
-        ],
-        "name": "playersForTransfer",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint16",
-                "name": "_playerId",
-                "type": "uint16"
-            }
-        ],
-        "name": "transfer",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
-            }
-        ],
-        "name": "transferOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint16",
-                "name": "_playerId",
-                "type": "uint16"
-            }
-        ],
-        "name": "unlistPlayer",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "verifiableRandomFootballer",
-        "outputs": [
-            {
-                "internalType": "contract IERC721",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "withdraw",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    }
+  {
+    "inputs": [],
+    "name": "getTransferListArray",
+    "outputs": [
+      {
+        "internalType": "uint16[]",
+        "name": "transfertListArray",
+        "type": "uint16[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_price",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint16",
+        "name": "_playerId",
+        "type": "uint16"
+      }
+    ],
+    "name": "listPlayerForTransfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_playerId",
+        "type": "uint16"
+      }
+    ],
+    "name": "playersForTransfer",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "price",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_playerId",
+        "type": "uint16"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint16",
+        "name": "_playerId",
+        "type": "uint16"
+      }
+    ],
+    "name": "unlistPlayer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "success",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "successs",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
 ]

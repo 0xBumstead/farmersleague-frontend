@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { TabList, Tab, Icon } from "web3uikit"
 import PlayerCard from "../PlayerCard"
 import PlayerTeam from "../PlayerTeam"
+import PlayerTransferLoan from "../PlayerTransferLoan"
 import Claim from "../Claim"
 import { Wrapper, Content, StyledLink } from "./Player.styles"
 
@@ -64,6 +65,7 @@ const Player = () => {
                     <Content>
                         <PlayerCard tokenId={parseInt(objectId)} clickable={false} />
                         <PlayerTeam tokenId={parseInt(objectId)} />
+                        <PlayerTransferLoan tokenId={parseInt(objectId)} />
                         <Claim tokenId={parseInt(objectId)} />
                     </Content>
                 </Tab>

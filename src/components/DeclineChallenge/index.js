@@ -12,7 +12,7 @@ const DeclineChallenge = ({ challengedTeam, challengingTeam, captainId }) => {
     const dispatch = useNotification()
     const navigate = useNavigate()
     const { Moralis, user, isWeb3Enabled } = useMoralis()
-    const Web3Api = useMoralisWeb3Api({})
+    const web3Api = useMoralisWeb3Api({})
 
     const [deadLine, setDeadLine] = useState(0)
     const [declinePrice, setDeclinePrice] = useState(0)
@@ -67,7 +67,7 @@ const DeclineChallenge = ({ challengedTeam, challengingTeam, captainId }) => {
         const declinePriceFromCall = Moralis.Units.FromWei(await getDeclinePrice())
         const kickBalanceFromCall = Moralis.Units.FromWei(await getKickBalance())
         const kickAllowanceFromCall = Moralis.Units.FromWei(await getKickAllowance())
-        const currentBlockFromCall = await Web3Api.native.getDateToBlock({
+        const currentBlockFromCall = await web3Api.native.getDateToBlock({
             chain: "mumbai",
             date: Date(),
         })

@@ -5,8 +5,10 @@ import { TabList, Tab, Icon, Illustration } from "web3uikit"
 import PlayerCard from "../PlayerCard"
 import Grid from "../Grid"
 import MintStepper from "../MintStepper"
+import TransferList from "../TransferList"
+import LoanList from "../LoanList"
 import main from "../../images/main.jpg"
-import { StyledLink, Wrapper, Text, Image } from "./DefaultTabBar.styles"
+import { StyledLink, Wrapper, Content, Text, Image } from "./DefaultTabBar.styles"
 import { contractAddresses, abi_VerifiableRandomFootballer } from "../../constants"
 
 
@@ -109,7 +111,12 @@ const DefaultTabBar = ({ defaultTab }) => {
                 tabKey={6}
                 tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="list" />{' '}<span style={{ paddingLeft: '4px' }}>Tranfers & Loans{' '}</span></div>}
             >
-                <Illustration logo="comingSoon" />
+                <Content>
+                    <TransferList />
+                </Content>
+                <Content>
+                    <LoanList />
+                </Content>
             </Tab>
             <Tab
                 tabKey={7}

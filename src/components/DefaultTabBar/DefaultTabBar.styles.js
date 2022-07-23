@@ -13,6 +13,10 @@ export const Wrapper = styled.div`
     padding: 30px 0;
 `
 
+export const Content = styled.div`
+    padding: 30px 0;
+`
+
 export const Text = styled.div`
     max-width: 600px;
 
