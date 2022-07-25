@@ -7,6 +7,7 @@ import Grid from "../Grid"
 import MintStepper from "../MintStepper"
 import TransferList from "../TransferList"
 import LoanList from "../LoanList"
+import PlayerOnLoan from "../PlayerOnLoan"
 import main from "../../images/main.jpg"
 import { StyledLink, Wrapper, Content, Text, Image } from "./DefaultTabBar.styles"
 import { contractAddresses, abi_VerifiableRandomFootballer } from "../../constants"
@@ -18,14 +19,15 @@ const DefaultTabBar = ({ defaultTab }) => {
     const [mintPrice, setMintPrice] = useState("0")
     const [allNFTs, setAllNFTs] = useState({ result: [] })
     const [myNFTs, setMyNFTs] = useState({ result: [] })
+    const [currentBlock, setCurrentBlock] = useState("")
 
     const verifiableRandomFootballerAddress = contractAddresses["VerifiableRandomFootballer"]
-    const ABI = abi_VerifiableRandomFootballer
+    const verifiableRandomFootballerABI = abi_VerifiableRandomFootballer
 
-    const Web3Api = useMoralisWeb3Api({})
+    const web3Api = useMoralisWeb3Api({})
 
     const { runContractFunction: getMintPrice } = useWeb3Contract({
-        abi: ABI,
+        abi: verifiableRandomFootballerABI,
         contractAddress: verifiableRandomFootballerAddress,
         functionName: "price",
         params: {},
@@ -34,16 +36,21 @@ const DefaultTabBar = ({ defaultTab }) => {
     const updateUIValues = async () => {
         const mintPriceFromCall = (await getMintPrice()).toString()
         setMintPrice(mintPriceFromCall)
-        let NFTsFromCall = await Web3Api.token.getAllTokenIds({
+        let NFTsFromCall = await web3Api.token.getAllTokenIds({
             chain: "mumbai",
             address: verifiableRandomFootballerAddress,
         })
         setAllNFTs(NFTsFromCall)
-        NFTsFromCall = await Web3Api.account.getNFTsForContract({
+        NFTsFromCall = await web3Api.account.getNFTsForContract({
             chain: "mumbai",
             token_address: verifiableRandomFootballerAddress,
         })
         setMyNFTs(NFTsFromCall)
+        const currentBlockFromCall = await web3Api.native.getDateToBlock({
+            chain: "mumbai",
+            date: Date(),
+        })
+        setCurrentBlock(currentBlockFromCall.block.toString())
     }
 
     useEffect(() => {
@@ -95,11 +102,20 @@ const DefaultTabBar = ({ defaultTab }) => {
                 tabKey={4}
                 tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="user" />{' '}<span style={{ paddingLeft: '4px' }}>My players{' '}</span></div>}
             >
-                <Grid header="My players">
-                    {myNFTs.result.map(id => (
-                        <PlayerCard key={id.token_id} tokenId={parseInt(id.token_id)} clickable />
-                    ))}
-                </Grid>
+                <Content>
+                    <Grid header="My players">
+                        {myNFTs.result.map(id => (
+                            <PlayerCard key={id.token_id} tokenId={parseInt(id.token_id)} clickable />
+                        ))}
+                    </Grid>
+                </Content>
+                <Content>
+                    <Grid header="Players loaned">
+                        {allNFTs.result.map(id => (
+                            <PlayerOnLoan key={id.token_id} tokenId={parseInt(id.token_id)} currentBlock={parseInt(currentBlock)} />
+                        ))}
+                    </Grid>
+                </Content>
             </Tab>
             <StyledLink to="/teams/0/0">
                 <Tab
