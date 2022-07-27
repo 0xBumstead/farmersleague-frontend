@@ -8,6 +8,7 @@ import MintStepper from "../MintStepper"
 import TransferList from "../TransferList"
 import LoanList from "../LoanList"
 import PlayerOnLoan from "../PlayerOnLoan"
+import TeamsList from "../TeamsList"
 import main from "../../images/main.jpg"
 import { StyledLink, Wrapper, Content, Text, Image } from "./DefaultTabBar.styles"
 import { contractAddresses, abi_VerifiableRandomFootballer } from "../../constants"
@@ -138,6 +139,9 @@ const DefaultTabBar = ({ defaultTab }) => {
                 tabKey={7}
                 tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="calendar" />{' '}<span style={{ paddingLeft: '4px' }}>Competition{' '}</span></div>}
             >
+                <Content>
+                    <TeamsList currentBlock={parseInt(currentBlock)} />
+                </Content>
                 <Illustration logo="comingSoon" />
             </Tab>
         </TabList>
