@@ -1,197 +1,11 @@
 [
     {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_LeagueGame",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_LeagueTeam",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_VerifiableRandomFootballer",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_PlayerLoan",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "constructor",
-        "name": "constructor"
-    },
-    {
-        "inputs": [],
-        "name": "AlreadySigned",
-        "type": "error"
-    },
-    {
-        "inputs": [],
-        "name": "IncorrectGameTeamPosition",
-        "type": "error"
-    },
-    {
-        "inputs": [],
-        "name": "NoCurrentGame",
-        "type": "error"
-    },
-    {
-        "inputs": [],
-        "name": "NotInTeam",
-        "type": "error"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
-        ],
-        "name": "NotOwner",
-        "type": "error"
-    },
-    {
-        "inputs": [],
-        "name": "PositionNotAvailable",
-        "type": "error"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "time",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "requested",
-                "type": "uint256"
-            }
-        ],
-        "name": "TooEarly",
-        "type": "error"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "previousOwner",
-                "type": "address"
-            },
-            {
-                "indexed": true,
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
-            }
-        ],
-        "name": "OwnershipTransferred",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "gameId",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint16",
-                "name": "playerId",
-                "type": "uint16"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint8",
-                "name": "position",
-                "type": "uint8"
-            }
-        ],
-        "name": "playerSignedUp",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "duration",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateDurationBetweenGames",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "duration",
-                "type": "uint256"
-            }
-        ],
-        "name": "updateGameDuration",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "duration",
-                "type": "uint256"
-            }
-        ],
-        "name": "updatePreRegistration",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint16",
-                "name": "_playerId",
-                "type": "uint16"
-            }
-        ],
-        "name": "currentOwner",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "owner",
-                "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "inputs": [],
         "name": "durationBetweenGames",
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "time",
                 "type": "uint256"
             }
         ],
@@ -204,7 +18,7 @@
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "time",
                 "type": "uint256"
             }
         ],
@@ -215,12 +29,12 @@
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "_gameId",
                 "type": "uint256"
             },
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "_rank",
                 "type": "uint256"
             }
         ],
@@ -253,8 +67,49 @@
     {
         "inputs": [
             {
+                "internalType": "uint256",
+                "name": "_gameId",
+                "type": "uint256"
+            }
+        ],
+        "name": "getGamePlayers",
+        "outputs": [
+            {
+                "components": [
+                    {
+                        "internalType": "uint16",
+                        "name": "playerId",
+                        "type": "uint16"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "blockSigned",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "uint8",
+                        "name": "defenseRate",
+                        "type": "uint8"
+                    },
+                    {
+                        "internalType": "uint8",
+                        "name": "attackRate",
+                        "type": "uint8"
+                    }
+                ],
+                "internalType": "struct IPlayerRate.playerSignUp[32]",
+                "name": "players",
+                "type": "tuple[32]"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "internalType": "uint16",
-                "name": "",
+                "name": "_playerId",
                 "type": "uint16"
             }
         ],
@@ -262,7 +117,7 @@
         "outputs": [
             {
                 "internalType": "bool",
-                "name": "",
+                "name": "signed",
                 "type": "bool"
             }
         ],
@@ -273,12 +128,12 @@
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "_layoutId",
                 "type": "uint256"
             },
             {
                 "internalType": "uint8",
-                "name": "",
+                "name": "_position",
                 "type": "uint8"
             }
         ],
@@ -286,21 +141,8 @@
         "outputs": [
             {
                 "internalType": "uint8",
-                "name": "",
+                "name": "positionId",
                 "type": "uint8"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
             }
         ],
         "stateMutability": "view",
@@ -310,7 +152,7 @@
         "inputs": [
             {
                 "internalType": "uint16",
-                "name": "",
+                "name": "_playerId",
                 "type": "uint16"
             }
         ],
@@ -318,7 +160,7 @@
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "time",
                 "type": "uint256"
             }
         ],
@@ -329,7 +171,7 @@
         "inputs": [
             {
                 "internalType": "uint8",
-                "name": "",
+                "name": "_position",
                 "type": "uint8"
             }
         ],
@@ -337,7 +179,7 @@
         "outputs": [
             {
                 "internalType": "uint8",
-                "name": "",
+                "name": "positionId",
                 "type": "uint8"
             }
         ],
@@ -350,44 +192,11 @@
         "outputs": [
             {
                 "internalType": "uint256",
-                "name": "",
+                "name": "time",
                 "type": "uint256"
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "renounceOwnership",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_duration",
-                "type": "uint256"
-            }
-        ],
-        "name": "setDurationBetweenGames",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_duration",
-                "type": "uint256"
-            }
-        ],
-        "name": "setGameDuration",
-        "outputs": [],
-        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -406,19 +215,6 @@
                 "type": "bool"
             }
         ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_duration",
-                "type": "uint256"
-            }
-        ],
-        "name": "setPreRegistration",
-        "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     },
@@ -446,20 +242,13 @@
             }
         ],
         "name": "signUpPlayer",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
+        "outputs": [
             {
-                "internalType": "address",
-                "name": "newOwner",
-                "type": "address"
+                "internalType": "bool",
+                "name": "success",
+                "type": "bool"
             }
         ],
-        "name": "transferOwnership",
-        "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
     }

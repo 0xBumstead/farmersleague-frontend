@@ -5,7 +5,7 @@ import Grid from "./Grid"
 import CheckTeamStatus from "./CheckTeamStatus"
 import { contractAddresses, abi_LeagueTeam } from "../constants"
 
-const TeamsList = ({ currentBlock }) => {
+const TeamsList = ({ currentBlock, gridHeader }) => {
 
     const { isWeb3Enabled } = useMoralis()
 
@@ -37,9 +37,9 @@ const TeamsList = ({ currentBlock }) => {
     }, [isWeb3Enabled])
 
     return (
-        <Grid header="Teams ready">
+        <Grid header={gridHeader}>
             {teamsList.map(id => (
-                <CheckTeamStatus key={id} teamId={id} teamsList={teamsList} currentBlock={currentBlock} />
+                <CheckTeamStatus key={id} teamId={id} teamsList={teamsList} currentBlock={currentBlock} gridHeader={gridHeader} />
             ))}
         </Grid>
     )
@@ -47,6 +47,7 @@ const TeamsList = ({ currentBlock }) => {
 
 TeamsList.propTypes = {
     currentBlock: PropTypes.number,
+    gridHeader: PropTypes.string,
 }
 
 export default TeamsList

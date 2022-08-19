@@ -8,6 +8,7 @@ import Teams from "./components/Teams"
 import Team from "./components/Team"
 import SignUpTeam from "./components/SignUpTeam"
 import Challenge from "./components/Challenge"
+import OnGoingGame from "./components/OnGoingGame"
 import ErrorMessage from "./components/ErrorMessage"
 import { GlobalStyle } from "./GlobalStyle"
 
@@ -29,6 +30,7 @@ const App = () => {
               <Route path="/team/:objectId/:paramId" element={<Team />} />
               <Route path="/signup/:objectId" element={<SignUpTeam />} />
               <Route path="/challenge/:objectId/:paramId" element={<Challenge />} />
+              <Route path="/game/:objectId/:firstParamId/:secondParamId" element={<OnGoingGame />} />
             </Routes>
           ) : (
             <>

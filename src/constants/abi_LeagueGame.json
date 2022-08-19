@@ -85,11 +85,6 @@
         "internalType": "uint256",
         "name": "_gameId",
         "type": "uint256"
-      },
-      {
-        "internalType": "uint8",
-        "name": "_result",
-        "type": "uint8"
       }
     ],
     "name": "finishGame",

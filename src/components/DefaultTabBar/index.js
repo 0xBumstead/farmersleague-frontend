@@ -140,7 +140,13 @@ const DefaultTabBar = ({ defaultTab }) => {
                 tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="calendar" />{' '}<span style={{ paddingLeft: '4px' }}>Competition{' '}</span></div>}
             >
                 <Content>
-                    <TeamsList currentBlock={parseInt(currentBlock)} />
+                    <TeamsList currentBlock={parseInt(currentBlock)} gridHeader="Teams Ready" />
+                </Content>
+                <Content>
+                    <TeamsList currentBlock={parseInt(currentBlock)} gridHeader="On-going Games" />
+                </Content>
+                <Content>
+                    <TeamsList currentBlock={parseInt(currentBlock)} gridHeader="Games To Finish" />
                 </Content>
                 <Illustration logo="comingSoon" />
             </Tab>
