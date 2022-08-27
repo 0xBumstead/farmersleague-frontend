@@ -9,8 +9,8 @@ export const Wrapper = styled.div`
 
 export const Content = styled.div`
     margin: 0 auto;
+    padding: 0 20px;
     display: flex;
-    align-items: center;
     justify-content: space-around;
 `
 

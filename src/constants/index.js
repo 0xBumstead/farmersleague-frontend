@@ -2,6 +2,7 @@ const contractAddresses = require("./contractAddresses.json")
 const eventTopics = require("./eventTopics.json")
 const positionsNumber = require("./positionsNumber.json")
 const layoutNumber = require("./layoutsNumber.json")
+const layoutsPositions = require("./layoutsPositions.json")
 const abi_KickToken = require("./abi_KickToken.json")
 const abi_PlayerLoan = require("./abi_PlayerLoan.json")
 const abi_PlayerTransfer = require("./abi_PlayerTransfer.json")
@@ -19,6 +20,7 @@ module.exports = {
     eventTopics,
     positionsNumber,
     layoutNumber,
+    layoutsPositions,
     abi_KickToken,
     abi_PlayerLoan,
     abi_PlayerTransfer,

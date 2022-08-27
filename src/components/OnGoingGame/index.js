@@ -46,10 +46,16 @@ const OnGoingGame = () => {
         const homeTeamLayoutFromCall = await getHomeTeamLayout()
         const awayTeamLayoutFromCall = await getAwayTeamLayout()
         const playersFromCall = await getPlayers()
+
+        let playersIds = []
+        for (let index = 0; index < 32; index++) {
+            playersIds.push(playersFromCall[index].playerId)
+        }
+
         setHomeTeamLayout(homeTeamLayoutFromCall)
         setAwayTeamLayout(awayTeamLayoutFromCall)
-        setHomeTeamPlayers(playersFromCall.slice(0, 16))
-        setAwayTeamPlayers(playersFromCall.slice(16, 32))
+        setHomeTeamPlayers(playersIds.slice(0, 16))
+        setAwayTeamPlayers(playersIds.slice(16, 32))
     }
 
     useEffect(() => {
@@ -111,8 +117,21 @@ const OnGoingGame = () => {
                     tabName={<div style={{ display: 'flex' }}><Icon fill="#eee" size={22} svg="lifeRing" />{' '}<span style={{ paddingLeft: '4px' }}>Game{' '}</span></div>}
                 >
                     <Content>
-                        <SignUpPlayer key="1" gameId={gameId} teamId={homeTeam} teamLayout={homeTeamLayout} teamPlayers={homeTeamPlayers} />
-                        <SignUpPlayer key="2" gameId={gameId} teamId={awayTeam} teamLayout={awayTeamLayout} teamPlayers={awayTeamPlayers} />
+                        <SignUpPlayer
+                            key="1"
+                            gameId={parseInt(gameId)}
+                            teamId={parseInt(homeTeam)}
+                            isHome
+                            teamLayout={parseInt(homeTeamLayout)}
+                            playersSigned={homeTeamPlayers}
+                        />
+                        <SignUpPlayer
+                            key="2"
+                            gameId={parseInt(gameId)}
+                            teamId={parseInt(awayTeam)}
+                            teamLayout={parseInt(awayTeamLayout)}
+                            playersSigned={awayTeamPlayers}
+                        />
                     </Content>
                 </Tab>
             </TabList>

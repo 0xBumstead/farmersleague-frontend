@@ -5,9 +5,9 @@ import { useMoralis, useWeb3Contract } from "react-moralis"
 import { useNotification } from "web3uikit"
 import ContractButton from "../ContractButton"
 import { Wrapper, Image, StyledLink } from "./PlayerCard.styles"
-import { contractAddresses, abi_VerifiableRandomFootballer, abi_LeagueTeam, abi_PlayerTransfer, abi_PlayerLoan, abi_KickToken } from "../../constants"
+import { contractAddresses, abi_VerifiableRandomFootballer, abi_LeagueTeam, abi_PlayerTransfer, abi_PlayerLoan, abi_KickToken, abi_PlayerRate } from "../../constants"
 
-const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam, captainId, transferable, loanable }) => {
+const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam, captainId, transferable, loanable, gameId, position }) => {
 
     const dispatch = useNotification()
     const { Moralis, user, isWeb3Enabled } = useMoralis()
@@ -35,6 +35,8 @@ const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam, captainId, trans
     const playerLoanABI = abi_PlayerLoan
     const kickTokenAddress = contractAddresses["KickToken"]
     const kickTokenABI = abi_KickToken
+    const playerRateAddress = contractAddresses["PlayerRate"]
+    const playerRateABI = abi_PlayerRate
     const walletAddress = user.get("ethAddress")
 
     const { runContractFunction: getTokenURI } = useWeb3Contract({
@@ -164,7 +166,7 @@ const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam, captainId, trans
                     <p>Compatible positions: {compatiblePositions} </p>
                     <p>Defense: {defense} / Attack: {attack}</p>
                     <Image src={imageURI} />
-                    {(team > 0 && (tokenId - captainId) !== 0) ? (
+                    {(team > 0 && (tokenId - captainId) !== 0 && gameId === undefined) ? (
                         <>
                             {isPlayerTeam ? (
                                 <ContractButton
@@ -249,6 +251,19 @@ const PlayerCard = ({ tokenId, clickable, teamId, isPlayerTeam, captainId, trans
             ) : (
                 <></>
             )}
+            {(gameId > 0) ? (
+                <ContractButton
+                    abi={playerRateABI}
+                    address={playerRateAddress}
+                    functionName="signUpPlayer"
+                    params={{ _playerId: tokenId, _teamId: teamId, _gameId: gameId, _position: position }}
+                    text="Sign with this Player"
+                    callback={txSuccess}
+                    disabled={false}
+                />
+            ) : (
+                <></>
+            )}
         </Wrapper>
     )
 }
@@ -261,6 +276,8 @@ PlayerCard.propTypes = {
     captainId: PropTypes.number,
     transferable: PropTypes.bool,
     loanable: PropTypes.bool,
+    gameId: PropTypes.number,
+    position: PropTypes.number,
 }
 
 export default PlayerCard

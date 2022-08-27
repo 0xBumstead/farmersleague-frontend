@@ -55,7 +55,7 @@ const CheckTeamStatus = ({ teamId, teamsList, currentBlock, gridHeader }) => {
 
     if (status.toString() === "4" && gridHeader === "On-going Games") {
         return (
-            <GameCard gameId={parseInt(gameId)} currentBlock={currentBlock} />
+            <GameCard gameId={parseInt(gameId)} currentBlock={currentBlock} teamId={teamId} />
         )
     }
 

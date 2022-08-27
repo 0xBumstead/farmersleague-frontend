@@ -6,13 +6,12 @@ import PropTypes from "prop-types"
 import { Wrapper } from "./GameCard.styles"
 import { contractAddresses, abi_LeagueGame, abi_PlayerRate } from "../../constants"
 
-const GameCard = ({ gameId, currentBlock }) => {
+const GameCard = ({ gameId, currentBlock, teamId }) => {
 
     const navigate = useNavigate()
     const { isWeb3Enabled } = useMoralis()
 
     const [gameEnding, setGameEnding] = useState(0)
-    const [gameTime, setGameTime] = useState(0)
     const [preRegistration, setPreRegistration] = useState(0)
     const [homeTeam, setHomeTeam] = useState("")
     const [awayTeam, setAwayTeam] = useState("")
@@ -64,7 +63,6 @@ const GameCard = ({ gameId, currentBlock }) => {
         const homeTeamFromCall = await getHomeTeam()
         const awayTeamFromCall = await getAwayTeam()
         setGameEnding(parseInt(gameTimeFromCall) + parseInt(gameDurationFromCall))
-        setGameTime(gameTimeFromCall)
         setPreRegistration(parseInt(gameTimeFromCall) - parseInt(preRegistrationFromCall))
         setHomeTeam(homeTeamFromCall)
         setAwayTeam(awayTeamFromCall)
@@ -80,11 +78,11 @@ const GameCard = ({ gameId, currentBlock }) => {
         }
     }, [isWeb3Enabled])
 
-    if (gameEnding < currentBlock && preRegistration > currentBlock) {
+    if (gameEnding > currentBlock && preRegistration < currentBlock && homeTeam.toString() === teamId.toString()) {
         return (
             <Wrapper>
-                <p>Teams #{homeTeam} and #{awayTeam} are engaged in a on-going game</p>
-                {(preRegistration > currentBlock) ? (
+                <p>Teams #{homeTeam.toString()} and #{awayTeam.toString()} are engaged in a on-going game</p>
+                {(preRegistration < currentBlock) ? (
                     <p>The pre-registration period is open</p>
                 ) : (
                     <p>The game has already started</p>
@@ -104,6 +102,7 @@ const GameCard = ({ gameId, currentBlock }) => {
 GameCard.propTypes = {
     gameId: PropTypes.number,
     currentBlock: PropTypes.number,
+    teamId: PropTypes.number,
 }
 
 export default GameCard
