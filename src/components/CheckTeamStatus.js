@@ -47,9 +47,15 @@ const CheckTeamStatus = ({ teamId, teamsList, currentBlock, gridHeader }) => {
         return (
             <>
                 {teamsList.map(id => (
-                    <GameSetCard key={id} challengedTeamId={teamId} challengingTeamId={id} currentBlock={currentBlock} />
+                    <GameSetCard key={id} challengedTeamId={teamId} challengingTeamId={id} gameId={0} currentBlock={currentBlock} />
                 ))}
             </>
+        )
+    }
+
+    if (status.toString() === "4" && gridHeader === "Up-coming Games") {
+        return (
+            <GameSetCard key="a" challengedTeamId={teamId} challengingTeamId={0} gameId={parseInt(gameId)} currentBlock={currentBlock} />
         )
     }
 

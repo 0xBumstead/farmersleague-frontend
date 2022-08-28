@@ -143,6 +143,9 @@ const DefaultTabBar = ({ defaultTab }) => {
                     <TeamsList currentBlock={parseInt(currentBlock)} gridHeader="Teams Ready" />
                 </Content>
                 <Content>
+                    <TeamsList currentBlock={parseInt(currentBlock)} gridHeader="Up-coming Games" />
+                </Content>
+                <Content>
                     <TeamsList currentBlock={parseInt(currentBlock)} gridHeader="On-going Games" />
                 </Content>
                 <Content>
