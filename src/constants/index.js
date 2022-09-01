@@ -14,6 +14,7 @@ const abi_GameResult = require("./abi_GameResult.json")
 const abi_ClaimKickToken = require("./abi_ClaimKickToken.json")
 const abi_event_challengeDeclined = require("./abi_event_challengeDeclined.json")
 const abi_event_teamChallenged = require("./abi_event_teamChallenged.json")
+const abi_event_gameFinished = require("./abi_event_gameFinished.json")
 
 module.exports = {
     contractAddresses,
@@ -31,5 +32,6 @@ module.exports = {
     abi_GameResult,
     abi_ClaimKickToken,
     abi_event_challengeDeclined,
-    abi_event_teamChallenged
+    abi_event_teamChallenged,
+    abi_event_gameFinished
 }

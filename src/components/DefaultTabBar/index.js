@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { useMoralis, useMoralisWeb3Api, useWeb3Contract } from "react-moralis"
-import { TabList, Tab, Icon, Illustration } from "web3uikit"
+import { TabList, Tab, Icon } from "web3uikit"
 import PlayerCard from "../PlayerCard"
 import Grid from "../Grid"
 import MintStepper from "../MintStepper"
@@ -9,9 +9,10 @@ import TransferList from "../TransferList"
 import LoanList from "../LoanList"
 import PlayerOnLoan from "../PlayerOnLoan"
 import TeamsList from "../TeamsList"
+import CheckGameStatus from "../CheckGameStatus"
 import main from "../../images/main.jpg"
 import { StyledLink, Wrapper, Content, Text, Image } from "./DefaultTabBar.styles"
-import { contractAddresses, abi_VerifiableRandomFootballer } from "../../constants"
+import { contractAddresses, abi_VerifiableRandomFootballer, abi_LeagueGame } from "../../constants"
 
 
 const DefaultTabBar = ({ defaultTab }) => {
@@ -21,9 +22,12 @@ const DefaultTabBar = ({ defaultTab }) => {
     const [allNFTs, setAllNFTs] = useState({ result: [] })
     const [myNFTs, setMyNFTs] = useState({ result: [] })
     const [currentBlock, setCurrentBlock] = useState("")
+    const [gameIds, setGameIds] = useState([])
 
     const verifiableRandomFootballerAddress = contractAddresses["VerifiableRandomFootballer"]
     const verifiableRandomFootballerABI = abi_VerifiableRandomFootballer
+    const leagueGameAddress = contractAddresses["LeagueGame"]
+    const leagueGameABI = abi_LeagueGame
 
     const web3Api = useMoralisWeb3Api({})
 
@@ -34,9 +38,23 @@ const DefaultTabBar = ({ defaultTab }) => {
         params: {},
     })
 
+    const { runContractFunction: getGameIds } = useWeb3Contract({
+        abi: leagueGameABI,
+        contractAddress: leagueGameAddress,
+        functionName: "gameIds",
+        params: {},
+    })
+
     const updateUIValues = async () => {
         const mintPriceFromCall = (await getMintPrice()).toString()
         setMintPrice(mintPriceFromCall)
+        const gameIdsFromCall = await getGameIds()
+        let gameIdsFromLoop = []
+        for (let index = 1; index < gameIdsFromCall; index++) {
+            gameIdsFromLoop.push(index)
+        }
+        setGameIds(gameIdsFromLoop)
+
         let NFTsFromCall = await web3Api.token.getAllTokenIds({
             chain: "mumbai",
             address: verifiableRandomFootballerAddress,
@@ -151,7 +169,13 @@ const DefaultTabBar = ({ defaultTab }) => {
                 <Content>
                     <TeamsList currentBlock={parseInt(currentBlock)} gridHeader="Games To Finish" />
                 </Content>
-                <Illustration logo="comingSoon" />
+                <Content>
+                    <Grid header="Past Games">
+                        {gameIds.map(id => (
+                            <CheckGameStatus gameId={id} currentBlock={parseInt(currentBlock)} />
+                        ))}
+                    </Grid>
+                </Content>
             </Tab>
         </TabList>
     )
